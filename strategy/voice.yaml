@@ -1,12 +1,14 @@
-# Voiceover settings for Reels (Higgsfield, model Eleven v4).
-# Chosen by Marc-Antoine: a Higgsfield preset voice (no cloning). The first Reel run generates one short sample with each
-# French preset available, saves them under posts/voice-samples/, picks the most natural Québec-sounding one, and records it here.
-# Marc-Antoine can override by setting voice_id below.
+# Voiceover settings for Reels.
+# Engine: Higgsfield generate_audio, model text2speech_v2, variant elevenlabs (ElevenLabs through Higgsfield).
+# Higgsfield exposes only variant, voice_type and voice_id: no ElevenLabs model choice, no stability/style settings,
+# and only Higgsfield's preset voices (none is Québécois) or a voice cloned in Higgsfield (voice_type: element).
+# Cost: about 1 credit per 20-second voiceover.
 
-model: elevenlabs_v4
 voice_type: preset
-voice_id: 165d9309-bb17-56ff-964a-5d6a38dab92f   # Nadine, picked 2026-10-29 WITHOUT listening (samples in posts/voice-samples/); Marc-Antoine to confirm
-# Shortlist of French-sounding Higgsfield presets to sample first (names only; accent unverified):
+voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf   # André, chosen by Marc-Antoine 2026-10-29 as the interim voice ("not perfect")
+# Next step under review: a cloned Québécois voice (voice_type: element) or ElevenLabs directly.
+
+# Other presets sampled 2026-10-29 (posts/voice-samples/):
 candidates:
   - {name: Celine,  gender: female, voice_id: 57ccb351-84d7-54ba-afd4-26b566ca6023}
   - {name: Elodie,  gender: female, voice_id: 8b95a259-62fd-545d-b0f0-7b521a972b6b}
@@ -14,7 +16,6 @@ candidates:
   - {name: Andre,   gender: male,   voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf}
   - {name: Xavier,  gender: male,   voice_id: 43173c95-3ec8-446a-a162-6504332c578b}
   - {name: Remy,    gender: female, voice_id: b9c5c5db-4eb7-468a-a0b7-d06423af0335}
-# Generate with generate_audio, model text2speech_v2, variant elevenlabs, voice_type preset.
-stability: 0.45
-similarity_boost: 0.8
-style_notes: "Québécois, conversationnel, énergique sans crier. Débit rapide dans le hook, plus posé dans le CTA."
+
+# Script tips that make any engine sound less robotic: short sentences, commas where you'd breathe,
+# Québec words spelled as said ("pis", "fait que"), numbers written out.
