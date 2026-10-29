@@ -6,4 +6,4 @@
 4. Update `strategy/slots.yaml` weights: move each slot's weight 20% toward its average score relative to the overall average (clamp 0.5 to 2.0). Keep exploration at 0.25 for the first 8 weeks.
 5. Append 3 to 5 lines to `strategy/learnings.md`: what worked, what didn't, what to try next week. Concrete (hook text, slot, template), no generalities.
 6. Note the Higgsfield credits spent this week and the balance.
-7. Commit (`Weekly review <date>`), push, and end with a short report: top post, worst post, slot changes, next week's focus, credits.
+7. Commit (`Weekly review <date>`), push to `main`, and end with a short report: top post, worst post, slot changes, next week's focus, credits.

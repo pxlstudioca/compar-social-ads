@@ -29,14 +29,14 @@ Read first: `strategy/playbook.md` (rules), `strategy/calendar.yaml`, `strategy/
    - Images: write a spec and run `python3 engine/render_image.py spec.json` (templates: lifestyle, vrai_faux, mythes, cta, text_card). Look at every output image before using it.
    - Reels: 2 clips with `generate_video` model `seedance_2_5` (pass the kept photo's job_id as `start_image`, 9:16, 5 s, `generate_audio: false`), voiceover with `generate_audio` model `text2speech_v2` variant `elevenlabs` (voice in `strategy/voice.yaml`; if `voice_id` is empty, make one 6 s sample per candidate, save them in `posts/voice-samples/`, use the best and say so in the report), then `python3 engine/render_video.py spec.json` with the hook as line 1 and a 9:16 `cta` end card. Watch 4 frames (0.8 s, middle, last line, end card) before using it.
    - Without the Higgsfield generation tools, skip photos and video and make a no-generation post.
-8. **Publish the files.** Save outputs under `posts/YYYY-MM-DD-slug/`, commit (`Add <slug> (<date>)`) and push. Confirm each public URL answers 200 before using it.
+8. **Publish the files.** Save outputs under `posts/YYYY-MM-DD-slug/`, commit (`Add <slug> (<date>)`) and push **to `main`** (the public URLs point at `main`; do not use a `claude/` branch). Confirm each public URL answers 200 before using it.
 9. **Queue in GoHighLevel.** Social Planner `create-post`, one request per platform, `status: in_review`, `scheduleDate` = chosen slot (UTC ISO), `postApprovalDetails: {approver, approvalStatus: pending, requesterNote: "<topic> — créé par Claude, à approuver"}`, `userId`, alt text on every image.
    - Instagram: `instagramPostDetails.type` post or reel; caption ends with "lien en bio 🔗".
    - Facebook: same visual; caption has the UTM link.
    - TikTok: Reels only; `tiktokPostDetails.privacyLevel: PUBLIC_TO_EVERYONE`; shorter caption.
    - YouTube: Reels only; `youtubePostDetails: {type: short, title (≤70 chars), privacyLevel: public}`; link in description.
    - Google: weekly; `gmbPostDetails: {gmbEventType: STANDARD, actionType: learn_more, url: <product page with UTM>}`; 4:3 image.
-10. **Log.** Append one row per platform to `log/posts.csv` (IDs, slot choice best/explore, credits, fact source). Commit and push.
+10. **Log.** Append one row per platform to `log/posts.csv` (IDs, slot choice best/explore, credits, fact source). Commit and push to `main`.
 11. **Report.** End with a short summary: what was queued, when, the media links, credits used and anything that needs a decision.
 
 ## If something fails
