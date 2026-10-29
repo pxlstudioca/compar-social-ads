@@ -7,6 +7,14 @@
 enabled: false   # 2026-10-29: Marc-Antoine requires a Québec French accent. André and his own Higgsfield clone
                  # (element eeb13d8b-0e32-42bb-8004-6799b92290aa, both engines) came out as international French. Reels go out without voice
                  # until a Québec voice is approved. Next step: test ElevenLabs Voice Library Québec voices directly.
+# Chosen 2026-10-29 by Marc-Antoine: two ElevenLabs Voice Library voices with a Québec accent, used directly in ElevenLabs
+# (not through Higgsfield: Higgsfield rejects ElevenLabs voice IDs, "Voice not found"). Alternate them Reel by Reel;
+# the weekly review compares results. Blocked until the runs can call ElevenLabs (connector or API key).
+elevenlabs:
+  man:   {name: "Québec Tremblay - Jeune Homme", voice_id: 0Z7Lo7cYVyjM6WL0AP0n}
+  woman: {name: "Amélie - Quebec, Canada",       voice_id: UJCi4DDncuo0VJDSIegj}
+  rotation: alternate
+
 voice_type: preset
 voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf   # André (not used while enabled: false)
 
