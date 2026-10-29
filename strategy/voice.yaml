@@ -4,9 +4,11 @@
 # and only Higgsfield's preset voices (none is Québécois) or a voice cloned in Higgsfield (voice_type: element).
 # Cost: about 1 credit per 20-second voiceover.
 
+enabled: false   # 2026-10-29: Marc-Antoine requires a Québec French accent. André and his own Higgsfield clone
+                 # (element eeb13d8b-0e32-42bb-8004-6799b92290aa, both engines) came out as international French. Reels go out without voice
+                 # until a Québec voice is approved. Next step: test ElevenLabs Voice Library Québec voices directly.
 voice_type: preset
-voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf   # André, chosen by Marc-Antoine 2026-10-29 as the interim voice ("not perfect")
-# Next step under review: a cloned Québécois voice (voice_type: element) or ElevenLabs directly.
+voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf   # André (not used while enabled: false)
 
 # Other presets sampled 2026-10-29 (posts/voice-samples/):
 candidates:
