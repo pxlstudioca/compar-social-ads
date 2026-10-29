@@ -64,7 +64,7 @@ LIFESTYLE_GEOMETRY = {
     # C scale, counter-bottom position, text bottom, headline px, subline px
     "4x5": dict(s=27, cbx=420, cby=1008, textbottom=104, h1=60, sub=33, left=80, right=80),
     "9x16": dict(s=36, cbx=430, cby=1290, textbottom=400, h1=68, sub=36, left=80, right=80),
-    "4x3": dict(s=19, cbx=560, cby=640, textbottom=92, h1=44, sub=25, left=64, right=470),
+    "4x3": dict(s=21, cbx=600, cby=600, textbottom=64, h1=44, sub=25, left=110, right=430),
 }
 
 
