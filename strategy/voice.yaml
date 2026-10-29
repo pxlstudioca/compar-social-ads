@@ -1,31 +1,24 @@
-# Voiceover settings for Reels.
-# Engine: Higgsfield generate_audio, model text2speech_v2, variant elevenlabs (ElevenLabs through Higgsfield).
-# Higgsfield exposes only variant, voice_type and voice_id: no ElevenLabs model choice, no stability/style settings,
-# and only Higgsfield's preset voices (none is Québécois) or a voice cloned in Higgsfield (voice_type: element).
-# Cost: about 1 credit per 20-second voiceover.
+# Voiceover settings for Reels. Requirement (Marc-Antoine, 2026-10-29): Québec French accent, nothing else.
+#
+# Engine: the ElevenLabs connector (claude.ai custom connector "ElevenLabs"), tool creative_generate_speech.
+# Higgsfield voices (presets and a Higgsfield clone) came out as international French: never use them for Reels.
+# Higgsfield also rejects ElevenLabs voice IDs.
 
-enabled: false   # 2026-10-29: Marc-Antoine requires a Québec French accent. André and his own Higgsfield clone
-                 # (element eeb13d8b-0e32-42bb-8004-6799b92290aa, both engines) came out as international French. Reels go out without voice
-                 # until a Québec voice is approved. Next step: test ElevenLabs Voice Library Québec voices directly.
-# Chosen 2026-10-29 by Marc-Antoine: two ElevenLabs Voice Library voices with a Québec accent, used directly in ElevenLabs
-# (not through Higgsfield: Higgsfield rejects ElevenLabs voice IDs, "Voice not found"). Alternate them Reel by Reel;
-# the weekly review compares results. Blocked until the runs can call ElevenLabs (connector or API key).
-elevenlabs:
-  man:   {name: "Québec Tremblay - Jeune Homme", voice_id: 0Z7Lo7cYVyjM6WL0AP0n}
-  woman: {name: "Amélie - Quebec, Canada",       voice_id: UJCi4DDncuo0VJDSIegj}
-  rotation: alternate
+enabled: true
+model_id: eleven_v4
+generations_count: 1          # the run can't listen to choose between takes, so one take per Reel
+cost: about 307 ElevenLabs credits per 20-second voiceover (1 credit per character)
 
-voice_type: preset
-voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf   # André (not used while enabled: false)
+# Two ElevenLabs Voice Library voices chosen by Marc-Antoine. Alternate them Reel by Reel:
+# use the voice that was NOT used on the most recent Reel in log/posts.csv (notes field "voice=<key>").
+# The weekly review compares their results.
+voices:
+  tremblay: {name: "Québec Tremblay - Jeune Homme québécois", gender: male,   voice_id: 0Z7Lo7cYVyjM6WL0AP0n}
+  amelie:   {name: "Amelie - Quebec, Canada",                 gender: female, voice_id: UJCi4DDncuo0VJDSIegj}
+rotation: alternate
+first_used: tremblay           # Friday 2026-10-30 Halloween Reel
 
-# Other presets sampled 2026-10-29 (posts/voice-samples/):
-candidates:
-  - {name: Celine,  gender: female, voice_id: 57ccb351-84d7-54ba-afd4-26b566ca6023}
-  - {name: Elodie,  gender: female, voice_id: 8b95a259-62fd-545d-b0f0-7b521a972b6b}
-  - {name: Nadine,  gender: female, voice_id: 165d9309-bb17-56ff-964a-5d6a38dab92f}
-  - {name: Andre,   gender: male,   voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf}
-  - {name: Xavier,  gender: male,   voice_id: 43173c95-3ec8-446a-a162-6504332c578b}
-  - {name: Remy,    gender: female, voice_id: b9c5c5db-4eb7-468a-a0b7-d06423af0335}
+# Download: the connector returns a signed content_url on storage.googleapis.com (allowed in Capabilities, expires after 2 h).
 
-# Script tips that make any engine sound less robotic: short sentences, commas where you'd breathe,
-# Québec words spelled as said ("pis", "fait que"), numbers written out.
+# Script tips: short sentences, commas where you'd breathe, Québec words spelled as said ("pis", "fait que"),
+# numbers written out, under about 320 characters for a 20-second Reel.

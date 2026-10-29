@@ -49,7 +49,7 @@ Never two posts of the same template in a row. Never the same product three days
 ## Credit budget (Higgsfield Pro plan, via the Higgsfield connector)
 
 - Photos: Nano Banana Pro, 2K, 2 credits each: 4 options per feed post (8), 2 options on Reel days (4).
-- Reels: one Seedance 2.5 image-to-video clip from our approved photo (9:16, 5 s, no native audio, 35 credits) as the opening shot, the rest as photo push-ins. Eleven v4 (`text2speech_v2` elevenlabs) for the voice, about 1.3 credits per Reel.
+- Reels: one Seedance 2.5 image-to-video clip from our approved photo (9:16, 5 s, no native audio, 35 credits) as the opening shot, the rest as photo push-ins. Voice: ElevenLabs directly (connector), Québec voices Tremblay and Amélie alternating, Eleven v4, about 307 ElevenLabs credits per Reel. Never Higgsfield voices (not Québec French).
 - **Hard caps:** at most 24 credits per daily run, **40 on a day that includes a Reel** (set by Marc-Antoine 2026-10-29); stop generating if the balance is below 100 and post a carousel instead; log credits spent per post. At 2 to 3 Reels a week this is roughly 100 to 160 credits a week.
 
 ## Lead-generation mechanics
