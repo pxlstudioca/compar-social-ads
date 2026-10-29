@@ -5,7 +5,7 @@
 
 model: elevenlabs_v4
 voice_type: preset
-voice_id: null          # set after the sample run
+voice_id: 165d9309-bb17-56ff-964a-5d6a38dab92f   # Nadine, picked 2026-10-29 WITHOUT listening (samples in posts/voice-samples/); Marc-Antoine to confirm
 # Shortlist of French-sounding Higgsfield presets to sample first (names only; accent unverified):
 candidates:
   - {name: Celine,  gender: female, voice_id: 57ccb351-84d7-54ba-afd4-26b566ca6023}
