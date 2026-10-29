@@ -1,0 +1,30 @@
+# Posting slots (America/Toronto). The daily run picks a slot per post:
+# - 75% of the time: the highest-weight free slot for that platform and weekday
+# - 25% of the time: a random other candidate slot (exploration, so times keep varying)
+# Then it adds a random offset of -12 to +12 minutes so posts never land on the same minute.
+# The weekly review updates the weights from engagement per post (likes + 2*comments + 3*shares, per 1000 followers when known).
+# Starting weights are generic benchmarks [guess]; Compar's own data replaces them after 4 to 6 weeks.
+
+exploration: 0.25
+jitter_minutes: 12
+min_gap_hours_same_platform: 4
+
+slots:
+  weekday:
+    - {time: "07:30", weight: 1.0}
+    - {time: "11:45", weight: 1.1}
+    - {time: "17:15", weight: 0.9}
+    - {time: "19:30", weight: 1.2}
+    - {time: "21:00", weight: 1.0}
+  saturday:
+    - {time: "09:30", weight: 1.1}
+    - {time: "13:00", weight: 0.9}
+    - {time: "19:30", weight: 1.0}
+  sunday:
+    - {time: "10:00", weight: 1.1}
+    - {time: "15:00", weight: 0.9}
+    - {time: "20:00", weight: 1.2}
+
+platform_overrides:
+  tiktok: {prefer: ["19:30", "21:00", "20:00"]}
+  google: {prefer: ["11:45", "13:00"]}

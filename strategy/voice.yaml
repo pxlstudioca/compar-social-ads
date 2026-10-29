@@ -1,0 +1,11 @@
+# Voiceover settings for Reels (Higgsfield, model Eleven v4).
+# Chosen by Marc-Antoine: a Higgsfield preset voice (no cloning). The first Reel run generates one short sample with each
+# French preset available, saves them under posts/voice-samples/, picks the most natural Québec-sounding one, and records it here.
+# Marc-Antoine can override by setting voice_id below.
+
+model: elevenlabs_v4
+voice_type: preset
+voice_id: null          # set after the sample run
+stability: 0.45
+similarity_boost: 0.8
+style_notes: "Québécois, conversationnel, énergique sans crier. Débit rapide dans le hook, plus posé dans le CTA."

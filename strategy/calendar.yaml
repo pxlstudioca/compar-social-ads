@@ -1,0 +1,118 @@
+# Québec moments for Compar Assurance content.
+# Dates repeat yearly unless marked "check"; the daily run verifies anything marked check against an official source
+# before using it, and logs the source. Windows are inclusive (MM-DD). Angles are starting points, not scripts.
+
+moments:
+  - id: pneus-hiver
+    window: [10-15, 12-01]
+    products: [auto]
+    fact: "Pneus d'hiver obligatoires du 1er décembre au 15 mars (Québec.ca). Crampons permis du 15 octobre au 1er mai. Amende 200 $ à 300 $."
+    source: https://www.quebec.ca/transports/circulation-securite-routiere/periode-hivernale/pneus-hiver
+    angles: [rendez-vous garage, pictogramme montagne-flocon, vrai-ou-faux pneus 4 saisons, revoir son assurance avant l'hiver]
+
+  - id: changement-heure
+    window: [10-28, 11-08]
+    check: "Fin de l'heure avancée: premier dimanche de novembre."
+    products: [auto]
+    angles: [noirceur à 16 h 30, piétons, visibilité, réflexes de conduite d'hiver]
+
+  - id: premiere-neige
+    trigger: weather   # only when Environment Canada reports snow on the ground in Québec City or Montréal
+    products: [auto, habitation]
+    angles: [déneiger son char au complet, pelle et toiture, glissade sans drame]
+
+  - id: motoneige-saison
+    window: [11-15, 03-15]
+    products: [motoneige]
+    angles: [préparer sa motoneige, droits d'accès aux sentiers (check), assurance motoneige: responsabilité vs dommages]
+
+  - id: fetes
+    window: [12-01, 01-02]
+    products: [habitation, auto]
+    angles: [maison vide pendant les Fêtes, vols de colis, retour de party: planifie ton lift, sapin et chandelles]
+
+  - id: grand-froid
+    trigger: weather   # extreme cold warning
+    window: [12-15, 02-28]
+    products: [habitation]
+    angles: [tuyaux gelés et dégâts d'eau, chauffage d'appoint, chalet inoccupé]
+
+  - id: resolutions
+    window: [01-02, 01-31]
+    products: [vie, auto, habitation]
+    angles: [renouvellement sans comparer = erreur, budget de l'année, assurance vie à 30 ans]
+
+  - id: saint-valentin
+    window: [02-07, 02-14]
+    products: [vie]
+    angles: ["l'assurance vie, une preuve d'amour", couple en union de fait au Québec (check: pas de protection automatique)]
+
+  - id: reer
+    window: [02-01, 03-01]
+    check: "Date limite de cotisation REER de l'année (habituellement autour du 1er mars)."
+    products: [vie]
+    angles: [protéger ses revenus, invalidité, calculateur]
+
+  - id: fin-pneus-hiver
+    window: [03-10, 04-15]
+    products: [auto]
+    angles: [pas trop vite pour les pneus d'été, nids-de-poule]
+
+  - id: crues-printanieres
+    window: [03-25, 05-15]
+    products: [habitation]
+    angles: [refoulement d'égout vs inondation (couvertures distinctes), clapet antiretour, photos de ses biens]
+
+  - id: impots
+    window: [03-01, 04-30]
+    products: [vie]
+    angles: [calculateur d'impôts Québec de Compar, cotisations, protéger sa famille]
+    link: https://comparassurance.ca/calculateurs/calculateur-impots/
+
+  - id: saison-moto-vr
+    window: [04-15, 06-30]
+    products: [moto, vr, bateau, vtt]
+    angles: [sortir la moto, roulotte en mouvement vs stationnaire, bateau et motomarine]
+
+  - id: fete-meres-peres
+    window: [05-01, 06-21]
+    products: [vie]
+    angles: [protéger ceux qu'on aime, jeune famille]
+
+  - id: fete-nationale
+    window: [06-20, 06-24]
+    products: [habitation, auto]
+    angles: [lifestyle Québec, feux de camp responsables, route des vacances]
+
+  - id: demenagement
+    window: [06-01, 07-05]
+    products: [locataire, habitation]
+    angles: [1er juillet, assurance locataire obligatoire? (vrai-ou-faux), changer d'adresse chez son assureur, biens dans le camion]
+
+  - id: vacances-construction
+    window: [07-15, 08-10]
+    check: "Vacances de la construction: deux dernières semaines de juillet."
+    products: [auto, vr, chalet]
+    angles: [road trip, maison vide, chalet et résidence secondaire]
+
+  - id: rentree
+    window: [08-15, 09-15]
+    products: [auto, locataire]
+    angles: [jeune conducteur, cégépien en appart, premier char]
+
+  - id: automne-route
+    window: [09-15, 10-31]
+    products: [auto, habitation]
+    angles: [chevreuils à l'aube et au crépuscule, feuilles mouillées, gouttières et toiture]
+
+  - id: halloween
+    window: [10-25, 10-31]
+    products: [habitation, auto]
+    angles: [enfants dans les rues: ralentis, décorations et responsabilité civile]
+
+evergreen:
+  - comment Compar fonctionne (formulaire, un professionnel te contacte, gratuit, sans engagement)
+  - facteurs qui influencent une prime auto (sans promettre d'économies)
+  - différences entre propriétaire, condo et locataire
+  - assurance vie temporaire vs permanente (général, sans conseil personnalisé)
+  - vrai ou faux / mythes par produit
