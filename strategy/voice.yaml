@@ -6,6 +6,15 @@
 model: elevenlabs_v4
 voice_type: preset
 voice_id: null          # set after the sample run
+# Shortlist of French-sounding Higgsfield presets to sample first (names only; accent unverified):
+candidates:
+  - {name: Celine,  gender: female, voice_id: 57ccb351-84d7-54ba-afd4-26b566ca6023}
+  - {name: Elodie,  gender: female, voice_id: 8b95a259-62fd-545d-b0f0-7b521a972b6b}
+  - {name: Nadine,  gender: female, voice_id: 165d9309-bb17-56ff-964a-5d6a38dab92f}
+  - {name: Andre,   gender: male,   voice_id: f1e8226e-2248-4d5f-b43c-0a79e9949dbf}
+  - {name: Xavier,  gender: male,   voice_id: 43173c95-3ec8-446a-a162-6504332c578b}
+  - {name: Remy,    gender: female, voice_id: b9c5c5db-4eb7-468a-a0b7-d06423af0335}
+# Generate with generate_audio, model text2speech_v2, variant elevenlabs, voice_type preset.
 stability: 0.45
 similarity_boost: 0.8
 style_notes: "Québécois, conversationnel, énergique sans crier. Débit rapide dans le hook, plus posé dans le CTA."

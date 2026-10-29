@@ -19,4 +19,4 @@ Files here are **public** (Meta and TikTok fetch media from these URLs at publis
 | `posts/YYYY-MM-DD-slug/` | Published media, one folder per post |
 | `log/posts.csv` | Every queued post with IDs, slot, credits and results |
 
-Requirements in the run environment: Python 3, Pillow, Playwright (Chromium), ffmpeg; network access to `d8j0ntlcm91z4.cloudfront.net` for Higgsfield downloads.
+Requirements in the run environment: Python 3, Pillow, Playwright (Chromium), ffmpeg; network access to `d8j0ntlcm91z4.cloudfront.net`, `d1xarpci4ikg0w.cloudfront.net` and `cdn.higgsfield.ai` for Higgsfield downloads; connectors GoHighLevel and Higgsfield (custom, https://mcp.higgsfield.ai/mcp).
