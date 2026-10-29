@@ -125,7 +125,7 @@ def vrai_faux(it):
 .half p{{margin:0;font-weight:600;font-size:44px;line-height:1.28}}
 .half p.small{{font-size:38px;font-weight:500;line-height:1.38;margin-top:22px}}
 .half .arrow{{right:56px}}
-.green{{color:{C['green']}}} .coral{{color:{C['coral']}}}"""
+.half h2 em.green{{color:{C['green']}}} .half h2 em.coral{{color:{C['coral']}}}"""
     word = it["verdict"].lower()
     cls = "green" if word == "vrai" else "coral"
     lines = "".join(f'<p class="small">{x}</p>' for x in it["explanation"])

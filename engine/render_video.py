@@ -79,22 +79,48 @@ def ass_escape(s):
     return s.replace("\\", "\\\\").replace("{", "(").replace("}", ")").replace("\n", "\\N")
 
 
-def split_caption(line, max_words=7):
-    """Split a spoken line into screens of <= max_words, preferring breaks after punctuation."""
+FUNCTION_WORDS = set("""le la les l' un une des du de d' à au aux en et ou pis que qu' qui ta ton tes ma mon mes sa son ses
+notre votre leur leurs pour par sur dans avec sans ne n' pas plus très ce cet cette ces se s' te t' me m' nous vous il ils elle
+on y c' j' si mais car dès entre vers chez contre depuis avant après jusqu' comme est sont""".split())
+
+
+def split_caption(line, max_chars=32):
+    """Split a spoken line into the fewest screens of <= max_chars, cutting at sentence ends first, then commas,
+    never right after a small word (le, du, à, ton, pis...) and never leaving a one-word screen."""
     words = line.split()
-    if len(words) <= max_words:
+    n = len(words)
+    if len(line) <= max_chars:
         return [line]
-    best, best_score = len(words) // 2, 1e9
-    for k in range(2, len(words) - 1):
-        score = abs(k - len(words) / 2)
-        if words[k - 1][-1] in ",.?!:;…" or words[k - 1].endswith("..."):
-            score -= 3
-        if score < best_score:
-            best, best_score = k, score
-    return split_caption(" ".join(words[:best]), max_words) + split_caption(" ".join(words[best:]), max_words)
+
+    def brk(w):  # cost of cutting right after word w
+        if w[-1] in ".?!…":
+            return 0
+        if w[-1] in ",:;":
+            return 1
+        return 8 if w.lower().strip("«»\"") in FUNCTION_WORDS else 3
+
+    INF = float("inf")
+    best = [INF] * (n + 1)
+    cut = [0] * (n + 1)
+    best[0] = 0
+    for i in range(1, n + 1):
+        for j in range(i - 1, -1, -1):
+            chunk = " ".join(words[j:i])
+            if len(chunk) > max_chars and i - j > 1:
+                break
+            cost = best[j] + 10 + (brk(words[i - 1]) if i < n else 0)
+            if i - j == 1 or len(chunk) < 8:
+                cost += 6
+            if cost < best[i]:
+                best[i], cut[i] = cost, j
+    chunks, i = [], n
+    while i > 0:
+        chunks.append(" ".join(words[cut[i]:i]))
+        i = cut[i]
+    return chunks[::-1]
 
 
-def build_ass(lines, total_speech, offset, path):
+def build_ass(lines, total_speech, offset, path, max_end=None):
     # Time each line by its length; the hook gets a minimum of 1.6 s.
     weights = [max(len(x), 12) for x in lines]
     tot = sum(weights)
@@ -107,9 +133,15 @@ def build_ass(lines, total_speech, offset, path):
         style = "Hook" if i == 0 else "Cap"
         # Captions: split long lines in two chunks so no screen holds more than ~7 words.
         chunks = [line] if i == 0 else split_caption(line)
-        cd = d / len(chunks)
-        for k, c in enumerate(chunks):
-            events.append(f"Dialogue: 0,{ass_time(t + k*cd)},{ass_time(t + (k+1)*cd)},{style},,0,0,0,,{ass_escape(c)}")
+        lens = [max(len(c), 8) for c in chunks]
+        start = t
+        for c, L in zip(chunks, lens):
+            stop = start + d * L / sum(lens)
+            if max_end is not None:
+                stop = min(stop, max_end)
+            if stop > start:
+                events.append(f"Dialogue: 0,{ass_time(start)},{ass_time(stop)},{style},,0,0,0,,{ass_escape(c)}")
+            start = stop
         t += d
     head = f"""[Script Info]
 ScriptType: v4.00+
@@ -159,7 +191,8 @@ def render(spec):
 
         # captions on the body
         ass = td / "caps.ass"
-        build_ass(spec["lines"], speech, 0.15, ass)
+        end_dur = float(spec.get("end_dur", 2.5))
+        build_ass(spec["lines"], speech, 0.15, ass, max_end=(body_dur - 0.35) if spec.get("end_card") else None)
         body_c = td / "body_c.mp4"
         run(["ffmpeg", "-y", "-i", str(body), "-vf", f"ass={ass}:fontsdir={TTF}",
              "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", str(body_c)])
