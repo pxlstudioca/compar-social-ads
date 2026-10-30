@@ -21,6 +21,7 @@ Every post has exactly one call to action that leads to a form.
 - **One form of address per piece.** `tu` for Reels, humour, Vrai ou faux and Mythes; `vous` for informative image posts and Google posts.
 - **Québec French**, not France French: soumission (not devis), char only in spoken Reels, chum/blonde ok in humour, no sacres.
 - Every post waits for approval in GoHighLevel (status `in_review`). Nothing publishes on its own.
+- **Safety messages never sell.** A post about road safety, children, pedestrians, accidents or dangerous weather carries no insurance pitch, no "compare" CTA and no product link: brand sign-off only (e.g. "Bonne Halloween à toute la gang!"). Pairing a risk to people with an insurance offer reads as profiting from fear (Marc-Antoine rejected the 2026-10-30 Halloween Reel for this). Lead-gen posts use money, admin and life-moment angles instead.
 
 ## Formats by placement
 
