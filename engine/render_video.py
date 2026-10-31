@@ -24,7 +24,7 @@ spec.json:
 Rules baked in:
 - 1080x1920, 30 fps, H.264 + AAC, loudness -14 LUFS, faststart.
 - Hook (line 1) is big, top third, inside the Reels safe zone; other lines are captions just above the bottom UI.
-- Captions are burned in (most people watch muted).
+- Captions are burned in (most people watch muted): white Manrope ExtraBold on blue-royal boxes with rounded corners.
 - Without a voiceover, lines are timed by length and the track is silent; music optional.
 """
 import json
@@ -70,15 +70,6 @@ def segment(src, dur, move, out):
     run(cmd)
 
 
-def ass_time(t):
-    h = int(t // 3600); m = int(t % 3600 // 60); s = t % 60
-    return f"{h}:{m:02d}:{s:05.2f}"
-
-
-def ass_escape(s):
-    return s.replace("\\", "\\\\").replace("{", "(").replace("}", ")").replace("\n", "\\N")
-
-
 FUNCTION_WORDS = set("""le la les l' un une des du de d' à au aux en et ou pis que qu' qui ta ton tes ma mon mes sa son ses
 notre votre leur leurs pour par sur dans avec sans ne n' pas plus très ce cet cette ces se s' te t' me m' nous vous il ils elle
 on y c' j' si mais car dès entre vers chez contre depuis avant après jusqu' comme est sont""".split())
@@ -120,8 +111,17 @@ def split_caption(line, max_chars=32):
     return chunks[::-1]
 
 
-def build_ass(lines, total_speech, offset, path, max_end=None):
-    # Time each line by its length; the hook gets a minimum of 1.6 s.
+CAPTION_STYLES = {
+    # font size, max text width, vertical anchor, padding x/y, corner radius
+    "Hook": dict(size=84, maxw=940, top=380, padx=30, pady=16, radius=22),
+    "Cap": dict(size=62, maxw=940, bottom=H - 700, padx=24, pady=12, radius=18),
+}
+CAPTION_BG = (0, 60, 166, 255)   # blue-royal #003ca6
+CAPTION_FG = (255, 255, 255, 255)
+
+
+def build_events(lines, total_speech, offset, max_end=None):
+    """Time each line by its length (the hook gets at least 1.6 s); returns [(start, stop, style, text)]."""
     weights = [max(len(x), 12) for x in lines]
     tot = sum(weights)
     t = offset
@@ -140,26 +140,73 @@ def build_ass(lines, total_speech, offset, path, max_end=None):
             if max_end is not None:
                 stop = min(stop, max_end)
             if stop > start:
-                events.append(f"Dialogue: 0,{ass_time(start)},{ass_time(stop)},{style},,0,0,0,,{ass_escape(c)}")
+                events.append((start, stop, style, c))
             start = stop
         t += d
-    head = f"""[Script Info]
-ScriptType: v4.00+
-PlayResX: {W}
-PlayResY: {H}
-WrapStyle: 0
-ScaledBorderAndShadow: yes
+    return events
 
-[V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Hook,CManropeXB,84,&H00FFFFFF,&H00FFFFFF,&H00A63C00,&H00A63C00,0,0,0,0,100,100,0,0,3,22,0,8,90,90,380,1
-Style: Cap,CManropeXB,62,&H00FFFFFF,&H00FFFFFF,&H00A63C00,&H00A63C00,0,0,0,0,100,100,0,0,3,16,0,2,110,110,700,1
 
-[Events]
-Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-"""
-    Path(path).write_text(head + "\n".join(events) + "\n")
-    return t
+def _wrap(text, font, maxw):
+    """Fewest lines that fit maxw; among those, the split with the narrowest widest line (even lines)."""
+    from itertools import combinations
+    from PIL import Image, ImageDraw
+    d = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    width = lambda s: d.textlength(s, font=font)
+    words = text.split()
+    if width(text) <= maxw or len(words) < 2:
+        return [text]
+    for n in range(2, len(words) + 1):
+        best, best_w = None, None
+        for cuts in combinations(range(1, len(words)), n - 1):
+            idx = (0,) + cuts + (len(words),)
+            lines = [" ".join(words[idx[k]:idx[k + 1]]) for k in range(n)]
+            mw = max(width(l) for l in lines)
+            if mw <= maxw and (best_w is None or mw < best_w):
+                best, best_w = lines, mw
+        if best:
+            return best
+    return [text]
+
+
+def caption_png(style, text, out):
+    """Transparent 1080x1920 PNG: white Manrope ExtraBold on blue-royal rounded boxes, one box per line."""
+    from PIL import Image, ImageDraw, ImageFont
+    st = CAPTION_STYLES[style]
+    font = ImageFont.truetype(str(TTF / "CManropeXB.ttf"), st["size"])
+    lines = _wrap(text, font, st["maxw"])
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    asc, desc = font.getmetrics()
+    line_h = asc + desc
+    box_h = line_h + 2 * st["pady"]
+    gap = 0  # boxes touch so a two-line caption reads as one block
+    total_h = len(lines) * box_h + (len(lines) - 1) * gap
+    y = st["top"] if "top" in st else st["bottom"] - total_h
+    for ln in lines:
+        tw = d.textlength(ln, font=font)
+        x0 = (W - tw) / 2 - st["padx"]
+        d.rounded_rectangle([x0, y, x0 + tw + 2 * st["padx"], y + box_h], radius=st["radius"], fill=CAPTION_BG)
+        d.text(((W - tw) / 2, y + st["pady"]), ln, font=font, fill=CAPTION_FG)
+        y += box_h + gap
+    img.save(out)
+
+
+def burn_captions(src, events, td, out):
+    """Overlay one PNG per caption event, each enabled only during its time window."""
+    inputs, chain, last = [], [], "[0:v]"
+    for k, (a, b, style, text) in enumerate(events):
+        png = Path(td) / f"cap{k}.png"
+        caption_png(style, text, png)
+        inputs += ["-i", str(png)]
+        lab = f"[v{k}]"
+        chain.append(f"{last}[{k + 1}:v]overlay=0:0:enable='between(t,{a:.3f},{b:.3f})'{lab}")
+        last = lab
+    if not events:
+        run(["ffmpeg", "-y", "-i", str(src), "-c", "copy", str(out)])
+        return
+    chain[-1] = chain[-1][: -len(last)] + ",format=yuv420p[vout]"
+    run(["ffmpeg", "-y", "-i", str(src)] + inputs + ["-filter_complex", ";".join(chain), "-map", "[vout]",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", str(out)])
 
 
 def render(spec):
@@ -189,13 +236,11 @@ def render(spec):
         body = td / "body.mp4"
         run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(body)])
 
-        # captions on the body
-        ass = td / "caps.ass"
-        end_dur = float(spec.get("end_dur", 2.5))
-        build_ass(spec["lines"], speech, 0.15, ass, max_end=(body_dur - 0.35) if spec.get("end_card") else None)
+        # captions on the body (rounded blue boxes, rendered as PNG overlays)
+        events = build_events(spec["lines"], speech, 0.15,
+                              max_end=(body_dur - 0.35) if spec.get("end_card") else None)
         body_c = td / "body_c.mp4"
-        run(["ffmpeg", "-y", "-i", str(body), "-vf", f"ass={ass}:fontsdir={TTF}",
-             "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p", str(body_c)])
+        burn_captions(body, events, td, body_c)
 
         # end card
         end_dur = float(spec.get("end_dur", 2.5))
