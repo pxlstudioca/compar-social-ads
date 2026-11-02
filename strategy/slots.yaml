@@ -18,8 +18,8 @@ slots:
     - {time: "21:00", weight: 1.0}
   saturday:
     - {time: "09:30", weight: 1.1}
-    - {time: "13:00", weight: 0.9}
-    - {time: "19:30", weight: 1.0}
+    - {time: "13:00", weight: 1.02}
+    - {time: "19:30", weight: 0.93}
   sunday:
     - {time: "10:00", weight: 1.1}
     - {time: "15:00", weight: 0.9}
