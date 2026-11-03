@@ -16,6 +16,13 @@ Templates (each item has "template", "name" and its own fields):
              fields: product (lowercase, e.g. "auto"), myths: [{"statement": html, "verdict": "faux"|"vrai", "explanation": [p, p]}]
   cta        closing slide: headline (HTML), subline, url_pill (e.g. "comparassurance.ca"), format
   text_card  bold statement on blue-royal with the C (no photo): kicker, headline (HTML), subline, format
+  checklist  white carousel: cover + one ticked slide per item
+             fields: label, headline (HTML), cover_subline, items: [{"title": html, "explanation": [p, p]}]
+  comparatif one slide, A vs B on charcoal: label, headline, a_kicker, a_title, b_kicker, b_title,
+             rows: [{"label", "a", "b"}] (3 to 4 rows), note (small print), grid_top
+  chiffre_cle one big sourced number on blue-royal: kicker, number (HTML; <em> = unit), context (HTML),
+             source (required, printed on the slide), format (4x5|9x16|4x3), number_size
+  comment    how Compar works, numbered steps: kicker, headline (HTML), steps: [{"title", "text"}], url_pill, format
 
 Every image is written as JPEG (Instagram's API accepts JPEG only) and PNG preview off.
 """
@@ -209,7 +216,155 @@ def text_card(it):
     return cta(it)
 
 
-TEMPLATES = {"lifestyle": lifestyle, "vrai_faux": vrai_faux, "mythes": mythes, "cta": cta, "text_card": text_card}
+# ---------------------------------------------------------------- checklist
+CHECK = ('<svg class="chk" width="{s}" height="{s}" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="{bg}"/>'
+         '<path d="M17 33l10 10 20-22" stroke="{fg}" stroke-width="6" fill="none" stroke-linecap="round" '
+         'stroke-linejoin="round"/></svg>')
+
+
+def checklist(it):
+    """White carousel: cover (title + empty boxes) and one slide per item (ticked box, n/N, title, lines)."""
+    W, H = FORMATS["4x5"]
+    items = it["items"]
+    n = it.get("name", "checklist")
+    css = PILL_CSS + f"""
+.frame{{background:#fff;color:{C['ink']}}}
+.pill{{border-color:{C['blue_royal']} !important;color:{C['blue_royal']} !important}}
+.arrow{{border-color:{C['blue_royal']}}} .arrow path{{stroke:{C['blue_royal']}}}
+.top{{position:absolute;left:80px;right:80px;top:96px}}
+.top h1{{margin:44px 0 0;font-size:96px;line-height:1.04;font-weight:800;letter-spacing:-0.02em;color:{C['blue_royal']}}}
+.top h1 em{{font-weight:600;font-size:1.06em}}
+.boxes{{position:absolute;left:80px;right:80px;bottom:200px}}
+.row{{display:flex;align-items:center;gap:30px;margin-top:26px}}
+.row .line{{flex:1;height:14px;border-radius:7px;background:#e8edf6}}
+.row:nth-child(2) .line{{flex:.8}} .row:nth-child(3) .line{{flex:.6}}
+.cover-sub{{position:absolute;left:80px;right:260px;bottom:60px;font-size:34px;font-weight:600;line-height:1.3;color:#55607a}}
+.item{{position:absolute;left:80px;right:80px;top:120px}}
+.ghost{{position:absolute;right:50px;bottom:-190px;font-weight:800;font-size:640px;line-height:1;color:#f3f5fa;letter-spacing:-0.05em}}
+.count{{font-weight:800;font-size:40px;color:{C['blue_sky']};letter-spacing:.02em}}
+.item .chk{{display:block;margin:70px 0 56px}}
+.item h2{{margin:0 0 48px;font-size:88px;line-height:1.1;font-weight:800;letter-spacing:-0.015em;color:{C['blue_royal']}}}
+.item p{{margin:0 0 30px;font-size:46px;line-height:1.38;font-weight:500;color:#2b3245}}
+.bar{{position:absolute;left:80px;right:80px;bottom:80px;display:flex;gap:14px}}
+.bar i{{flex:1;height:10px;border-radius:5px;background:#e8edf6}} .bar i.on{{background:{C['blue_royal']}}}"""
+    empty = CHECK.format(s=72, bg="#e8edf6", fg="#e8edf6")
+    rows = "".join(f'<div class="row">{empty}<div class="line"></div></div>' for _ in items)
+    cover = f"""<div class="top">{_pill(it['label'])}<h1>{it['headline']}</h1></div>
+<div class="boxes">{rows}</div>
+{f'<div class="cover-sub">{it["cover_subline"]}</div>' if it.get('cover_subline') else ''}{ARROW}"""
+    out = [(f"{n}-0", W, H, _page(W, H, cover, css))]
+    for i, m in enumerate(items, 1):
+        ps = "".join(f"<p>{x}</p>" for x in m.get("explanation", []))
+        bar = "".join(f'<i class="{"on" if k <= i else ""}"></i>' for k in range(1, len(items) + 1))
+        body = f"""<div class="ghost">{i}</div><div class="item"><div class="count">{i}/{len(items)}</div>
+{CHECK.format(s=140, bg=C['blue_royal'], fg='#fff')}<h2>{m['title']}</h2>{ps}</div><div class="bar">{bar}</div>"""
+        out.append((f"{n}-{i}", W, H, _page(W, H, body, css)))
+    return out
+
+
+# ---------------------------------------------------------------- comparatif
+def comparatif(it):
+    """One slide, two columns A vs B on charcoal: label, headline, a header row, then aligned rows."""
+    W, H = FORMATS["4x5"]
+    rows = it["rows"]
+    css = PILL_CSS + f"""
+.frame{{background:{C['charcoal']}}}
+.top{{position:absolute;left:70px;right:70px;top:80px}}
+.top h1{{margin:30px 0 0;font-size:68px;line-height:1.08;font-weight:800;letter-spacing:-0.015em}}
+.top h1 em{{font-weight:600;color:{C['blue_sky']};font-size:1.06em}}
+.grid{{position:absolute;left:70px;right:70px;top:{it.get('grid_top', 380)}px;display:grid;grid-template-columns:1fr 1fr;column-gap:18px}}
+.hd{{border-radius:28px 28px 0 0;padding:30px 34px 26px;font-size:46px;font-weight:800;line-height:1.05}}
+.hd small{{display:block;font-size:24px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;opacity:.75}}
+.a{{background:{C['blue_royal']}}} .b{{background:#fff;color:{C['ink']}}}
+.cell{{padding:22px 34px 24px;font-size:33px;line-height:1.3;font-weight:600;border-top:2px solid rgba(255,255,255,.14)}}
+.cell.b{{border-top-color:#e3e8f2}}
+.cell .k{{display:block;font-size:23px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;opacity:.65}}
+.last{{border-radius:0 0 28px 28px;padding-bottom:34px}}
+.note{{position:absolute;left:70px;right:70px;bottom:56px;font-size:24px;line-height:1.35;color:#9aa3b5}}"""
+    cells = (f'<div class="hd a"><small>{it.get("a_kicker", "")}</small>{it["a_title"]}</div>'
+             f'<div class="hd b"><small>{it.get("b_kicker", "")}</small>{it["b_title"]}</div>')
+    for k, r in enumerate(rows):
+        last = " last" if k == len(rows) - 1 else ""
+        cells += (f'<div class="cell a{last}"><span class="k">{r["label"]}</span>{r["a"]}</div>'
+                  f'<div class="cell b{last}"><span class="k">{r["label"]}</span>{r["b"]}</div>')
+    body = f"""<div class="top">{_pill(it['label'])}<h1>{it['headline']}</h1></div><div class="grid">{cells}</div>
+{f'<div class="note">{it["note"]}</div>' if it.get('note') else ''}"""
+    return [(it.get("name", "comparatif"), W, H, _page(W, H, body, css))]
+
+
+# ---------------------------------------------------------------- chiffre clé
+# Shrinks .num until it fits its box (long numbers like "200 à 300 $").
+FIT_JS = """<script>document.fonts.ready.then(()=>{const n=document.querySelector('.num');
+let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth&&f>60){f-=4;n.style.fontSize=f+'px';}});</script>"""
+
+
+def chiffre_cle(it):
+    """One big sourced number on blue-royal with the C: kicker, number, unit/context, source line (required)."""
+    fmt = it.get("format", "4x5")
+    W, H = FORMATS[fmt]
+    if not it.get("source"):
+        raise ValueError("chiffre_cle needs a 'source' (shown on the slide)")
+    g = {"4x5": dict(top=230, num=250, ctx=50, s=24, cy=0.70),
+         "9x16": dict(top=330, num=270, ctx=54, s=30, cy=0.70),
+         "4x3": dict(top=90, num=190, ctx=40, s=18, cy=0.80)}[fmt]
+    num = it.get("number_size", g["num"])
+    svg = _c_band_svg(W, H, g["s"], W * 0.80, H * g["cy"], C["blue_compar"], C["blue_mid"])
+    css = PILL_CSS + f"""
+.frame{{background:{C['blue_royal']}}}
+.t{{position:absolute;left:80px;right:80px;top:{g['top']}px}}
+.kicker{{font-size:32px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:{C['blue_mist']}}}
+.num{{margin:40px 0 10px;font-weight:800;font-size:{num}px;line-height:.95;letter-spacing:-0.04em;white-space:nowrap}}
+.num em{{font-weight:600;font-size:.62em;letter-spacing:-0.01em;color:{C['blue_mid']}}}
+.ctx{{margin:36px 0 0;max-width:{W - 260}px;font-size:{g['ctx']}px;line-height:1.22;font-weight:700}}
+.ctx em{{font-size:1.06em}}
+.src{{position:absolute;left:80px;bottom:{70 if fmt != '4x3' else 50}px;font-size:24px;font-weight:600;color:{C['blue_mist']}}}
+.logo{{position:absolute;right:80px;bottom:{62 if fmt != '4x3' else 42}px}} .logo svg{{width:200px;height:auto;display:block}}"""
+    body = f"""{svg}<div class="t"><div class="kicker">{it.get('kicker', '')}</div>
+<div class="num">{it['number']}</div><p class="ctx">{it['context']}</p></div>
+<div class="src">Source&nbsp;: {it['source']}</div><div class="logo">{LOGO_WHITE}</div>{FIT_JS}"""
+    return [(it.get("name", "chiffre-cle"), W, H, _page(W, H, body, css))]
+
+
+# ---------------------------------------------------------------- comment ça marche
+def comment(it):
+    """How Compar works: headline + numbered steps on a vertical rail, url pill and logo. 4x5, 9x16 or 4x3."""
+    fmt = it.get("format", "4x5")
+    W, H = FORMATS[fmt]
+    steps = it["steps"]
+    wide = fmt == "4x3"
+    top = {"4x5": 110, "9x16": 280, "4x3": 70}[fmt]
+    svg = _c_band_svg(W, H, 18 if wide else 26, W * 0.92, H * 0.80, C["blue_compar"], C["blue_mid"])
+    css = PILL_CSS + f"""
+.frame{{background:{C['blue_royal']}}}
+.t{{position:absolute;left:80px;right:80px;top:{top}px}}
+.kicker{{font-size:30px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:{C['blue_mist']}}}
+h1{{margin:20px 0 0;font-size:{60 if wide else 84}px;line-height:1.05;font-weight:800;letter-spacing:-0.02em}}
+h1 em{{font-weight:600;font-size:1.06em}}
+.steps{{position:relative;margin-top:{40 if wide else 100}px}}
+.steps:before{{content:"";position:absolute;left:{34 if wide else 47}px;top:40px;bottom:40px;width:3px;background:{C['blue_mid']};opacity:.6}}
+.st{{position:relative;display:flex;gap:40px;align-items:flex-start;margin-bottom:{22 if wide else 76}px}}
+.dot{{flex:none;width:{70 if wide else 96}px;height:{70 if wide else 96}px;border-radius:50%;background:#fff;color:{C['blue_royal']};
+      font-weight:800;font-size:{36 if wide else 44}px;display:flex;align-items:center;justify-content:center}}
+.st h2{{margin:{6 if wide else 12}px 0 10px;font-size:{38 if wide else 56}px;line-height:1.12;font-weight:800}}
+.st p{{margin:0;font-size:{26 if wide else 38}px;line-height:1.3;font-weight:600;color:{C['blue_mist']}}}
+.foot{{position:absolute;left:80px;right:80px;bottom:{50 if wide else (700 if fmt == '9x16' else 90)}px;display:flex;align-items:center;justify-content:space-between}}
+.foot .pill{{font-size:30px;text-transform:none;letter-spacing:0;padding:14px 30px 13px}}
+.logo svg{{width:230px;height:auto;display:block}}
+.t .foot{{position:static;margin-top:30px}}"""
+    tall = fmt == "9x16"   # Reel safe zone: the footer follows the steps instead of sitting at the bottom
+    foot = f'<div class="foot">{_pill(it.get("url_pill", "comparassurance.ca"))}<div class="logo">{LOGO_WHITE}</div></div>'
+    sts = ""
+    for i, st in enumerate(steps, 1):
+        txt = f"<p>{st['text']}</p>" if st.get("text") else ""
+        sts += f'<div class="st"><div class="dot">{i}</div><div><h2>{st["title"]}</h2>{txt}</div></div>'
+
+    body = f"""{svg}<div class="t"><div class="kicker">{it.get('kicker', '')}</div><h1>{it['headline']}</h1>
+<div class="steps">{sts}</div>{foot if tall else ''}</div>{'' if tall else foot}"""
+    return [(it.get("name", "comment"), W, H, _page(W, H, body, css))]
+
+
+TEMPLATES = {"lifestyle": lifestyle, "vrai_faux": vrai_faux, "mythes": mythes, "cta": cta, "text_card": text_card,
+             "checklist": checklist, "comparatif": comparatif, "chiffre_cle": chiffre_cle, "comment": comment}
 
 
 def render_spec(spec):
