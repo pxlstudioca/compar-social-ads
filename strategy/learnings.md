@@ -2,7 +2,7 @@
 
 The weekly review appends dated findings here: which hooks, formats, topics and time slots got the most engagement and link clicks, and what to change. Newest first. Keep each entry to 5 lines.
 
-- 2026-11-09 (weekly): Zero published. All 22 posts scheduled Nov 2-8 (IG, FB, TikTok, YouTube, Google; 9 topics) are still approvalStatus "pending" in GHL, slots passed, 0 likes/comments/shares. Second week in a row approval is the only bottleneck: no hook, slot or template can be scored until posts go live.
+- 2026-11-09 (weekly): Zero published. All 23 posts scheduled Nov 2-8 (IG, FB, TikTok, YouTube, Google; 9 topics) are still approvalStatus "pending" in GHL, slots passed, 0 likes/comments/shares. Second week in a row approval is the only bottleneck: no hook, slot or template can be scored until posts go live.
 - 2026-11-09 (weekly): Every request lists approver = createdBy = VfKKC78PqV5Rcfbt7mwc (the connector's own user) and actionViaMagicLink "none". The approver is probably never notified [likely]. Fix needed by Marc-Antoine: set the real approver user in the request, or turn off approval for these accounts and review in the GHL calendar instead.
 - 2026-11-09 (weekly): Slots unchanged (no data). Cumulative real data is still 5 published posts from Oct 31-Nov 1. Keep exploration at 0.25.
 - 2026-11-09 (weekly): Higgsfield balance 464.65 -> 318.65 (146 cr). Daily runs used 36 (Nano Banana Pro 4x2 on Nov 4, 7, 9; 6x2 on Nov 8), all on posts that never ran. ~108 cr went outside the daily runs: GPT Image 2.6 x8 (22), Nano Banana 2.1 x16 at 2 (32), Kling v3.0 (7.5) on Nov 8 00:54-02:15 UTC; Nano Banana 2.1 x31 at 1.5 (46.5) on Nov 8-9 04:06-07:58 UTC.

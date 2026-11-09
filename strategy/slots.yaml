@@ -5,7 +5,7 @@
 # The weekly review updates the weights from engagement per post (likes + 2*comments + 3*shares, per 1000 followers when known).
 # Starting weights are generic benchmarks [guess]; Compar's own data replaces them after 4 to 6 weeks.
 
-# 2026-11-09 review: weights unchanged, 0 posts published Nov 2-8 (all 22 expired unapproved), no data to move them.
+# 2026-11-09 review: weights unchanged, 0 posts published Nov 2-8 (all 23 expired unapproved), no data to move them.
 exploration: 0.25
 jitter_minutes: 12
 min_gap_hours_same_platform: 4
