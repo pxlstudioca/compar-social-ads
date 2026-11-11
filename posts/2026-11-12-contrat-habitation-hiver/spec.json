@@ -1,0 +1,7 @@
+{"out_dir": "posts/2026-11-12-contrat-habitation-hiver", "items": [
+ {"template":"text_card","name":"questions-0","kicker":"Assurance habitation","headline":"Avant l'hiver, <em>relisez</em> votre contrat.","subline":"3 questions à vous poser. Glissez →"},
+ {"template":"text_card","name":"questions-1","kicker":"Question 1","headline":"Quel est le montant de <em>votre</em> franchise?","subline":"Mieux vaut le savoir avant d'en avoir besoin."},
+ {"template":"text_card","name":"questions-2","kicker":"Question 2","headline":"Savez-vous comment <em>vos</em> biens seraient remboursés?","subline":"La réponse est dans votre contrat. Prenez le temps de la trouver."},
+ {"template":"text_card","name":"questions-3","kicker":"Question 3","headline":"Le refoulement d'égout fait-il <em>partie</em> de votre protection?","subline":"Si vous ne le savez pas, c'est le moment de vérifier."},
+ {"template":"cta","name":"cta","headline":"Comparez vos options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel vous contacte."}
+]}
