@@ -1,0 +1,8 @@
+{"out_dir": "posts/2026-11-13-mythes-vie", "items": [
+ {"template":"mythes","name":"mythes","product":"vie","myths":[
+  {"statement":"L'assurance vie, c'est juste quand on a des <em>enfants</em>.","verdict":"faux","explanation":["Une hypothèque, un conjoint ou des dettes peuvent aussi entrer en ligne de compte.","La vraie question: qui compte sur ton revenu?"]},
+  {"statement":"Mon assurance collective au travail, j'ai pas besoin de la <em>regarder</em>.","verdict":"faux","explanation":["Vérifie le montant prévu.","Et demande-toi ce qui arrive si tu changes d'emploi."]},
+  {"statement":"Comparer, c'est long et <em>compliqué</em>.","verdict":"faux","explanation":["Tu remplis un formulaire en quelques minutes.","Un professionnel te contacte. Gratuit, sans engagement."]}
+ ]},
+ {"template":"cta","name":"cta","headline":"Compare tes options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel te contacte.","url_pill":"comparassurance.ca"}
+]}
