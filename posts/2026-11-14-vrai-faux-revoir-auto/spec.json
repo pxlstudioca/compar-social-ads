@@ -1,0 +1,4 @@
+{"out_dir": "posts/2026-11-14-vrai-faux-revoir-auto", "items": [
+ {"template":"vrai_faux","name":"vrai-faux","label":"ASSURANCE AUTO","statement":"Revoir ton assurance auto, c'est juste quand tu changes de <em>voiture</em>.","verdict":"faux","explanation":["Un déménagement, un nouveau conducteur à la maison ou un avis de renouvellement: c'est aussi le bon moment.","Comparer t'aide à voir tes options avant de signer."]},
+ {"template":"cta","name":"cta","headline":"Compare tes options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel te contacte.","url_pill":"comparassurance.ca"}
+]}
