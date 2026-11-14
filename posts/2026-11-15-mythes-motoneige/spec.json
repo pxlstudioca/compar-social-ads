@@ -1,0 +1,8 @@
+{"out_dir": "posts/2026-11-15-mythes-motoneige", "items": [
+ {"template":"mythes","name":"mythes","product":"motoneige","myths":[
+  {"statement":"L'assurance responsabilité civile, c'est optionnel pour une <em>motoneige</em>.","verdict":"faux","explanation":["Au Québec, le propriétaire d'un véhicule hors route doit avoir au moins 1 000 000 $ en responsabilité civile.","Sans assurance: amende d'au moins 250 $. (Québec.ca)"]},
+  {"statement":"La responsabilité civile couvre aussi ma propre <em>motoneige</em>.","verdict":"faux","explanation":["Elle sert à indemniser les dommages causés par ton véhicule aux autres.","Pour le vol ou les bris de ta motoneige, vérifie ce que ton contrat prévoit."]},
+  {"statement":"Je sors ma motoneige juste quelques fins de semaine, pas besoin de <em>comparer</em>.","verdict":"faux","explanation":["Le début de la saison, c'est un bon moment pour revoir tes protections.","Tu remplis un formulaire, un professionnel te contacte."]}
+ ]},
+ {"template":"cta","name":"cta","headline":"Compare tes options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel te contacte.","url_pill":"comparassurance.ca"}
+]}
