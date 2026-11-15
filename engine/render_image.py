@@ -13,7 +13,8 @@ Templates (each item has "template", "name" and its own fields):
   vrai_faux  2 slides: question (white, giant quotes, charcoal card) and verdict
              fields: label (pill, e.g. "ASSURANCE AUTO"), statement, verdict ("vrai"|"faux"), explanation (list of lines, HTML ok)
   mythes     cover + one slide per myth
-             fields: product (lowercase, e.g. "auto"), myths: [{"statement": html, "verdict": "faux"|"vrai", "explanation": [p, p]}]
+             fields: product (lowercase, e.g. "auto"), myths: [{"statement": html, "verdict": "faux"|"vrai", "explanation": [p, p]}],
+                     cover_image (optional transparent PNG cutout under the big number): {"src", "left", "top", "width"} in px
   cta        closing slide: headline (HTML), subline, url_pill (e.g. "comparassurance.ca"), format
   text_card  bold statement on blue-royal with the C (no photo): kicker, headline (HTML), subline, format
 
@@ -137,6 +138,13 @@ def vrai_faux(it):
 
 
 # ---------------------------------------------------------------- mythes
+def _cover_img(ci):
+    if not ci:
+        return ""
+    return (f'<img src="file://{Path(ci["src"]).resolve()}" style="position:absolute;left:{ci.get("left", 80)}px;'
+            f'top:{ci.get("top", 860)}px;width:{ci.get("width", 900)}px;height:auto">')
+
+
 def mythes(it):
     W, H = FORMATS["4x5"]
     myths = it["myths"]
@@ -158,7 +166,7 @@ def mythes(it):
     out = []
     cover = f"""<div class="top">{_pill('Assurance')}<h3><em>{it['product']}</em></h3></div>
 <div class="big"><div class="num">{len(myths)}</div><div class="word">Mythes</div></div>
-{f'<div class="cover-sub">{it["cover_subline"]}</div>' if it.get('cover_subline') else ''}{ARROW}"""
+{_cover_img(it.get('cover_image'))}{f'<div class="cover-sub">{it["cover_subline"]}</div>' if it.get('cover_subline') else ''}{ARROW}"""
     out.append((f"{n}-0", W, H, _page(W, H, cover, css)))
     for i, m in enumerate(myths, 1):
         v = m.get("verdict", "faux").lower()
