@@ -1,0 +1,17 @@
+{"out": "posts/2026-11-16-pneus-contrat-auto/reel.mp4",
+ "segments": [
+  {"src": "posts/2026-11-16-pneus-contrat-auto/photo-garage.jpg", "dur": 5.0, "move": "in"},
+  {"src": "posts/2026-11-16-pneus-contrat-auto/photo-cles.jpg", "dur": 6.0, "move": "out"},
+  {"src": "posts/2026-11-16-pneus-contrat-auto/photo-auto.jpg", "dur": 5.0, "move": "in"}
+ ],
+ "voice": null,
+ "lines": [
+  "T'as pas encore pris ton rendez-vous pour les pneus?",
+  "Pendant que t'appelles le garage, fais une autre affaire.",
+  "Sors ton contrat d'assurance auto.",
+  "Regarde ta franchise, tes protections et ta date de renouvellement.",
+  "Si ta situation a changé, compare tes options.",
+  "C'est gratuit et sans engagement."
+ ],
+ "end_card": "posts/2026-11-16-pneus-contrat-auto/endcard-9x16.jpg",
+ "end_dur": 2.5, "music": null}
