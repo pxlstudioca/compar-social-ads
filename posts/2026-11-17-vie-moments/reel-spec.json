@@ -1,0 +1,17 @@
+{"out": "posts/2026-11-17-vie-moments/reel.mp4",
+ "segments": [
+  {"src": "posts/2026-11-17-vie-moments/photo-famille.jpg", "dur": 5.5, "move": "in"},
+  {"src": "posts/2026-11-17-vie-moments/photo-trottoir.jpg", "dur": 5.5, "move": "out"},
+  {"src": "posts/2026-11-17-vie-moments/photo-cuisine.jpg", "dur": 6.0, "move": "in"}
+ ],
+ "voice": null,
+ "lines": [
+  "Ta famille a changé? Ton assurance vie, elle?",
+  "Un bébé, une maison, un nouvel emploi.",
+  "Ce sont de bons moments pour revoir ta protection.",
+  "Demande-toi qui dépend de ton revenu.",
+  "Ensuite, compare tes options.",
+  "C'est gratuit et sans engagement."
+ ],
+ "end_card": "posts/2026-11-17-vie-moments/endcard-9x16.jpg",
+ "end_dur": 2.5, "music": null}
