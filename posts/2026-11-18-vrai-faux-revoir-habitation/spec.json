@@ -1,0 +1,4 @@
+{"out_dir": "posts/2026-11-18-vrai-faux-revoir-habitation", "items": [
+ {"template":"vrai_faux","name":"vrai-faux","label":"ASSURANCE HABITATION","statement":"Ton assurance habitation, tu la revois juste quand tu <em>déménages</em>.","verdict":"faux","explanation":["Des rénovations, un achat important, du travail à la maison ou un avis de renouvellement: c'est aussi le bon moment.","Relis ton contrat et compare tes options avant de renouveler."]},
+ {"template":"cta","name":"cta","headline":"Compare tes options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel te contacte.","url_pill":"comparassurance.ca"}
+]}
