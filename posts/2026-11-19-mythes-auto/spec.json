@@ -1,0 +1,8 @@
+{"out_dir": "posts/2026-11-19-mythes-auto", "items": [
+ {"template":"mythes","name":"mythes","product":"auto","myths":[
+  {"statement":"Mon assurance auto se renouvelle toute seule, j'ai rien à <em>vérifier</em>.","verdict":"faux","explanation":["Lis ton avis de renouvellement quand il arrive.","Regarde la prime, la franchise et les protections avant de dire oui."]},
+  {"statement":"J'ai déménagé ou je roule plus qu'avant, ça change rien à mon <em>dossier</em>.","verdict":"faux","explanation":["Une nouvelle adresse ou un autre usage du véhicule, ce sont des infos à mettre à jour.","Ton dossier doit refléter ta situation d'aujourd'hui."]},
+  {"statement":"Comparer, ça m'oblige à changer d'<em>assurance</em>.","verdict":"faux","explanation":["Comparer, c'est juste voir tes options.","Gratuit, sans engagement. C'est toi qui décides."]}
+ ]},
+ {"template":"cta","name":"cta","headline":"Compare tes options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel te contacte.","url_pill":"comparassurance.ca"}
+]}
