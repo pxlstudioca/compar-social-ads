@@ -1,0 +1,7 @@
+{"out_dir": "posts/2026-11-20-locataire-questions", "items": [
+ {"template":"text_card","name":"questions-0","kicker":"Assurance locataire","headline":"Locataire? Vos <em>biens</em> comptent aussi.","subline":"3 questions à vous poser. Glissez →"},
+ {"template":"text_card","name":"questions-1","kicker":"Question 1","headline":"Combien coûterait le <em>remplacement</em> de vos biens?","subline":"Meubles, électroménagers, vêtements : faites le calcul une fois."},
+ {"template":"text_card","name":"questions-2","kicker":"Question 2","headline":"Votre contrat inclut-il la <em>responsabilité</em> civile?","subline":"Si un dégât part de chez vous, la réponse est dans votre contrat."},
+ {"template":"text_card","name":"questions-3","kicker":"Question 3","headline":"Votre adresse et vos biens sont-ils <em>à jour</em> au contrat?","subline":"Un déménagement ou un gros achat? C'est le moment de vérifier."},
+ {"template":"cta","name":"cta","headline":"Comparez vos options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel vous contacte."}
+]}
