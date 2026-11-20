@@ -1,0 +1,4 @@
+{"out_dir": "posts/2026-11-21-vrai-faux-sud-habitation", "items": [
+ {"template":"vrai_faux","name":"vrai-faux","label":"ASSURANCE HABITATION","statement":"Partir quelques semaines dans le Sud, ça ne change rien à mon assurance <em>habitation</em>.","verdict":"faux","explanation":["Un contrat peut prévoir des exclusions quand le logement est vacant, par exemple pour les dégâts d'eau.","Avant de partir, relis ton contrat et compare tes options."]},
+ {"template":"cta","name":"cta","headline":"Compare tes options en <em>quelques minutes.</em>","subline":"Gratuit, sans engagement. Un professionnel te contacte.","url_pill":"comparassurance.ca"}
+]}
